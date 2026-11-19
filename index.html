@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mi Bolsillo: control de gastos personales que funciona en el navegador y guarda los datos con localStorage.">
+  <title>Mi Bolsillo – Control de gastos</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="cabecera">
+    <h1>Mi Bolsillo</h1>
+    <p>Control de gastos personales. Tus datos se guardan en este navegador.</p>
+  </header>
+
+  <main class="contenedor">
+    <!-- Formulario para agregar o editar -->
+    <section class="tarjeta" aria-labelledby="titulo-form">
+      <h2 id="titulo-form">Nuevo gasto</h2>
+      <form id="form-gasto" novalidate>
+        <div class="campo">
+          <label for="descripcion">Descripción</label>
+          <input id="descripcion" name="descripcion" type="text" maxlength="60" autocomplete="off" placeholder="Ej. Tacos del comedor">
+          <small class="error" id="error-descripcion" aria-live="polite"></small>
+        </div>
+
+        <div class="fila">
+          <div class="campo">
+            <label for="monto">Monto (MXN)</label>
+            <input id="monto" name="monto" type="number" step="0.01" min="0" inputmode="decimal" placeholder="0.00">
+            <small class="error" id="error-monto" aria-live="polite"></small>
+          </div>
+          <div class="campo">
+            <label for="fecha">Fecha</label>
+            <input id="fecha" name="fecha" type="date">
+            <small class="error" id="error-fecha" aria-live="polite"></small>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="categoria">Categoría</label>
+          <select id="categoria" name="categoria"></select>
+          <small class="error" id="error-categoria" aria-live="polite"></small>
+        </div>
+
+        <div class="acciones">
+          <button type="submit" id="btn-guardar" class="btn primario">Agregar gasto</button>
+          <button type="button" id="btn-cancelar" class="btn" hidden>Cancelar edición</button>
+        </div>
+        <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <!-- Resumen automático -->
+    <section class="tarjeta" aria-labelledby="titulo-resumen">
+      <h2 id="titulo-resumen">Resumen</h2>
+      <dl class="resumen" id="resumen"></dl>
+      <h3>Gasto por categoría</h3>
+      <ul class="categorias" id="lista-categorias"></ul>
+    </section>
+
+    <!-- Lista con búsqueda, filtro y orden -->
+    <section class="tarjeta ancho" aria-labelledby="titulo-lista">
+      <h2 id="titulo-lista">Mis gastos</h2>
+      <div class="controles">
+        <div class="campo">
+          <label for="busqueda">Buscar</label>
+          <input id="busqueda" type="search" placeholder="Buscar por descripción">
+        </div>
+        <div class="campo">
+          <label for="filtro-categoria">Categoría</label>
+          <select id="filtro-categoria"></select>
+        </div>
+        <div class="campo">
+          <label for="orden">Ordenar por</label>
+          <select id="orden">
+            <option value="fecha-desc">Fecha (más reciente)</option>
+            <option value="fecha-asc">Fecha (más antigua)</option>
+            <option value="monto-desc">Monto (mayor a menor)</option>
+            <option value="monto-asc">Monto (menor a mayor)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tabla-envoltura">
+        <table>
+          <caption class="solo-lectores">Lista de gastos registrados</caption>
+          <thead>
+            <tr><th scope="col">Fecha</th><th scope="col">Descripción</th><th scope="col">Categoría</th><th scope="col" class="num">Monto</th><th scope="col">Acciones</th></tr>
+          </thead>
+          <tbody id="cuerpo-tabla"></tbody>
+        </table>
+      </div>
+      <div id="vacio" class="vacio" hidden>
+        <p id="texto-vacio"></p>
+        <button type="button" id="btn-ejemplos" class="btn" hidden>Cargar datos de ejemplo</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">Laboratorio de Programación Web · FIME · UANL</footer>
+</body>
+</html>
